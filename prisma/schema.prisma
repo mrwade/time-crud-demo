@@ -1,0 +1,36 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Account {
+  id        String   @id @default(cuid()) @db.VarChar(30)
+  name      String   @db.VarChar(40)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  workSessions WorkSession[]
+
+  @@index([name])
+  @@map("accounts")
+}
+
+model WorkSession {
+  id          String    @id @default(cuid()) @db.VarChar(30)
+  accountId   String    @db.VarChar(30)
+  account     Account   @relation(fields: [accountId], references: [id])
+  startsOn    DateTime? @db.Date
+  description String?   @db.VarChar(120)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@index([accountId, startsOn])
+  @@map("workSessions")
+}
