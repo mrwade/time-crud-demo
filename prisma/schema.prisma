@@ -28,6 +28,7 @@ model WorkSession {
   account     Account   @relation(fields: [accountId], references: [id])
   startsOn    DateTime? @db.Date
   description String?   @db.VarChar(120)
+  hours       Float?
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
 

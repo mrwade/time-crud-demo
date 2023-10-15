@@ -1,8 +1,9 @@
+import NewAccountCreator from "@/components/NewAccountCreator";
 import { db } from "@/modules/db";
-import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import Link from "next/link";
+import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -24,15 +25,16 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.className} flex h-screen`}>
-        <div className="bg-slate-800 text-slate-100 w-[240px] p-4">
+        <div className="flex flex-col gap-4 bg-slate-800 text-slate-100 w-[240px] p-4">
           {accounts.map((account) => (
             <Link key={account.id} href={`/accounts/${account.id}`}>
               {account.name}
             </Link>
           ))}
+          <NewAccountCreator />
         </div>
 
-        {children}
+        <div className="flex-1">{children}</div>
       </body>
     </html>
   );
